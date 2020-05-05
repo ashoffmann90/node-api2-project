@@ -85,6 +85,22 @@ router.get('/:id/comments', (req, res) => {
     })
 })
 
+router.delete('/:id', (req, res) => {
+    const id = req.params.id
+    Posts.remove(id)
+    .then(posts => {
+        if(posts) {
+            res.status(200).json({ message: "The post has been deleted "})
+        } else {
+            res.status(404).json({ errorMessage: "The post with the specified ID does not exist"})
+        }
+    })
+    .catch(err => {
+        console.log(err)
+        res.status(500).json({errorMessage: "The post could not be removed" })
+    })
+})
+
 router.put('/:id', (req, res) => {
     const post_id = req.params.id
     const updated_post = req.body
