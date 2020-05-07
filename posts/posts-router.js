@@ -1,5 +1,5 @@
 const router = require('express').Router()
-
+const restricted = require('../auth/restrict')
 const Posts = require('../data/db')
 
 router.post('/', (req, res) => {
@@ -53,7 +53,7 @@ router.get('/', (req, res) => {
     })
 })
 
-router.get('/:id', (req, res) => {
+router.get('/:id', restricted, (req, res) => {
     const id = req.params.id
     Posts.findById(id)
     .then(post => {
